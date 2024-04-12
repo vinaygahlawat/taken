@@ -12,5 +12,6 @@ class TestCard(unittest.TestCase):
     def test_points_value(self):
         self.assertEqual(self.card.points, 7, "The card point value is incorrect.")
 
+
 if __name__ == '__main__':
     unittest.main()
