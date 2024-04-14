@@ -25,7 +25,7 @@ class BoardRow:
             return True
         return False
 
-    def reset(self, new_start_card: Card) -> list:
+    def reset(self, new_start_card: Card) -> deque[Card]:
         # Get all elements of the board row to return to caller
         row_contents = self.board_row.copy()
 

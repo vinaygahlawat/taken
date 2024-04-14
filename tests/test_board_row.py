@@ -1,6 +1,7 @@
 import unittest
 from source.board_row import BoardRow
 from source.card import Card
+from collections import deque
 
 class TestBoardRow(unittest.TestCase):
 
@@ -34,6 +35,8 @@ class TestBoardRow(unittest.TestCase):
         row.add(Card(33,2))
         self.assertTrue(row.is_full())
         contents = row.reset(Card(2,1))
+        self.assertTrue(isinstance(contents, deque))
+        self.assertTrue(isinstance(contents[0], Card))
         self.assertEqual(len(contents), 5)
         self.assertEqual(row.max_size, 5)
         self.assertEqual(row.peek(), 2)
