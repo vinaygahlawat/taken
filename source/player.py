@@ -1,5 +1,4 @@
 from source.card import Card
-from source.dealer import Dealer
 
 '''
 Player object needs to represent either a human or computer player.
@@ -10,7 +9,6 @@ This card needs to be removed from the hand and sent to the dealer.
 class Player:
 
     def __init__(self, dealer, is_computer: bool = True) -> None:
-        self.dealer = dealer
         self.is_computer = is_computer
         self.hand = []
 
@@ -22,8 +20,8 @@ class Player:
     def hand(self, value):
         self._hand = value
 
-    def play_card(self) -> None:
-        self.dealer.play_card(self, self.choose_card())
+    # def play_card(self) -> None:
+    #     self.dealer.play_card(self, self.choose_card())
 
     def choose_card(self) -> Card:
         return self.hand[0]
