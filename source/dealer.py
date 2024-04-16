@@ -23,6 +23,21 @@ class Dealer:
 
         # Deal Cards
         self.game_deck: Deck = Deck(deck_size, card_point_map)
+        player_hand = []
+        for i in range(number_of_players):
+            hand = []
+            player_hand.append(hand)
+        for i in range(deck_size):
+            player = i % number_of_players
+            card = self.game_deck.card_deck[i]
+            player_hand[player].append(card)
+
+        # Give dealt cards to players
+        j = 0
+        for id in self.players.keys():
+            self.players[id].hand = player_hand[j]
+            if j < number_of_players:
+                j += 1
 
     def play_card(Player, Card):
         pass
