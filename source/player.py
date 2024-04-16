@@ -8,9 +8,18 @@ This card needs to be removed from the hand and sent to the dealer.
 '''
 class Player:
 
-    def __init__(self, dealer, is_computer: bool = True) -> None:
+    def __init__(self, dealer, id: str, is_computer: bool = True) -> None:
         self.is_computer = is_computer
+        self.id = id
         self.hand = []
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, value: str):
+        self._id = value
 
     @property
     def hand(self):
