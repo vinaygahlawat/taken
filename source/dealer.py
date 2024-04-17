@@ -1,6 +1,7 @@
 from source.deck import Deck
 from source.card import Card
 from source.player import Player
+from source.board_row import BoardRow
 
 '''
 The Dealer object will be responsible for managing match play.
@@ -14,7 +15,7 @@ The Dealer:
 '''
 class Dealer:
 
-    def __init__(self, number_of_players: int, deck_size: int, card_point_map: dict) -> None:
+    def __init__(self, number_of_players: int, deck_size: int, board_size: int, card_point_map: dict) -> None:
         # Set up Players
         self.players = {}
         for i in range(0, number_of_players):
@@ -22,7 +23,7 @@ class Dealer:
             self.players[id] = Player(self, id)
 
         # Deal Cards
-        self.game_deck: Deck = Deck(deck_size, card_point_map)
+        self.game_deck: Deck = Deck(deck_size + board_size, card_point_map)
         player_hand = []
         for i in range(number_of_players):
             hand = []
@@ -38,6 +39,11 @@ class Dealer:
             self.players[id].hand = player_hand[j]
             if j < number_of_players:
                 j += 1
+
+        # Set up board
+        self.board: BoardRow = []
+        for row in range(board_size):
+            self.board.append(BoardRow(self.game_deck.card_deck[deck_size+row],5))
 
     def play_card(Player, Card):
         pass
