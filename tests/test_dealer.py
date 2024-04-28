@@ -8,4 +8,3 @@ class TestDealer(unittest.TestCase):
         self.assertEqual(len(dealer.game_deck.card_deck), 108)
         self.assertEqual(len(dealer.players), 2)
         self.assertIsNotNone(dealer.players['0'].hand)
-        self.assertEqual(len(dealer.board), 4)

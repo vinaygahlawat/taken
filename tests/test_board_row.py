@@ -6,17 +6,19 @@ from source.card import Card
 class TestBoardRow(unittest.TestCase):
 
     def test_max_size(self):
-        row = BoardRow(Card(1,1),3)
+        row = BoardRow(3)
         self.assertEqual(row.max_size, 3)
 
     def test_add_card(self):
-        row = BoardRow(Card(4,3), 5)
+        row = BoardRow(5)
+        row.add(Card(4,3))
         row.add(Card(6,1))
         self.assertEqual(row.peek(), 6)
         self.assertFalse(row.is_full())
 
     def test_row_full(self):
-        row = BoardRow(Card(4,3), 5)
+        row = BoardRow(5)
+        row.add(Card(4,3))
         row.add(Card(5,1))
         row.add(Card(7,11))
         row.add(Card(21,7))
@@ -27,7 +29,8 @@ class TestBoardRow(unittest.TestCase):
         self.assertTrue(row.is_full())
 
     def test_row_reset(self):
-        row = BoardRow(Card(4,3), 5)
+        row = BoardRow(5)
+        row.add(Card(4,3))
         row.add(Card(5,1))
         row.add(Card(7,11))
         row.add(Card(21,7))
