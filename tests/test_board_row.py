@@ -1,7 +1,7 @@
 import unittest
+from collections import deque
 from source.board_row import BoardRow
 from source.card import Card
-from collections import deque
 
 class TestBoardRow(unittest.TestCase):
 

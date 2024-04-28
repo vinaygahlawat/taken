@@ -29,8 +29,10 @@ class Player:
     def hand(self, value):
         self._hand = value
 
-    # def play_card(self) -> None:
-    #     self.dealer.play_card(self, self.choose_card())
+    def play_card(self) -> Card:
+        return self.choose_card()
 
     def choose_card(self) -> Card:
-        return self.hand[0]
+        card_to_play = self.hand[0]
+        del(self.hand[0])
+        return card_to_play

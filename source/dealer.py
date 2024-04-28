@@ -15,7 +15,7 @@ The Dealer:
 '''
 class Dealer:
 
-    def __init__(self, number_of_players: int, deck_size: int, board_size: int, card_point_map: dict) -> None:
+    def __init__(self, number_of_players: int, rounds_per_game: int, deck_size: int, board_size: int, card_point_map: dict) -> None:
         # Set up Players
         self.players = {}
         for i in range(0, number_of_players):
@@ -28,7 +28,10 @@ class Dealer:
         for i in range(number_of_players):
             hand = []
             player_hand.append(hand)
-        for i in range(deck_size):
+
+        number_of_cards_to_deal = rounds_per_game * number_of_players
+
+        for i in range(number_of_cards_to_deal):
             player = i % number_of_players
             card = self.game_deck.card_deck[i]
             player_hand[player].append(card)

@@ -22,8 +22,9 @@ class TestPlayer(unittest.TestCase):
     def test_choose_card(self):
         player = Player(None, '0')
         player.hand = [Card(2, 7), Card(7,3)]
-        self.assertEqual(player.choose_card().number, 2)
-        self.assertEqual(player.choose_card().points, 7)
+        card = player.choose_card()
+        self.assertEqual(card.number, 2)
+        self.assertEqual(card.points, 7)
 
 
 if __name__ == '__main__':
