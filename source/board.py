@@ -6,5 +6,5 @@ class Board:
 
         # Set up board
         self.board_rows: list[BoardRow] = []
-        for row in range(board_size):
-            self.board_rows.append(BoardRow(max_board_row_size))
+        for row_id in range(board_size):
+            self.board_rows.append(BoardRow(row_id, max_board_row_size))

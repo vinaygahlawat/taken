@@ -9,7 +9,7 @@ the ability to clear the stack to start fresh with a new Card.
 '''
 class BoardRow:
 
-    def __init__(self, max_size: int) -> None:
+    def __init__(self, id: int, max_size: int) -> None:
         self.board_row = deque()
         self.max_size = max_size
 
