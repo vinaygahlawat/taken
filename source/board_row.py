@@ -11,7 +11,16 @@ class BoardRow:
 
     def __init__(self, id: int, max_size: int) -> None:
         self.board_row = deque()
+        self.id = id
         self.max_size = max_size
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, value: int):
+        self._id = value
 
     def peek(self) -> int:
         return self.board_row[0].number
