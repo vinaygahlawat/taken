@@ -78,10 +78,10 @@ class Dealer:
             # Play a round
             self.play_round()
 
-        print_to_file(f'\tEnd of rounds for this game. Current board:')
+            # Show game board at the end of every round
+            print_to_file(f'\tEnd of round --> Current board:')
+            self.board.show_board()
 
-        # Show game board at the end of every round
-        self.board.show_board()
 
         print_to_file(f'\tGame ends.')
 
@@ -96,4 +96,35 @@ class Dealer:
     def play_round(self) -> None:
         print_to_file(f'\t\t*** Round Started ***')
 
+        # Get a card from each player
+        cards_played: list[Card] = []
+        for id in self.players.keys():
+            player = self.players[id]
+            player_card = player.play_card()
+            print_to_file(f'\t\t\t\tPlayer {player.id} played Card: {player_card.number}')
+            cards_played.append(player_card)
+
+        # Sort played cards so turns can commence, beginning with
+        # the player with the lowest-numbered played card.
+        cards_played.sort(key=Card.sortFunc)
+
+        # Start turns with player with the lowest card
+        # Add them to the board
+        while len(cards_played) > 0:
+            result = self.board.add_card(cards_played[0])
+            if result == None:
+                # Card cannot be placed in any row, so Player must choose row to replace
+                continue # TODO: add functionality for asking player for row choice
+            else:
+                del(cards_played[0])
+                row_taken = ''
+                for card in result:
+                    row_taken += f'{card.number}|{card.points}\t'
+                if row_taken != '':
+                    print_to_file("\t\t\tRow TakeN: " + row_taken)
+                # TODO: add functionality to sum up card points and add to scoreboard
+
         print_to_file(f'\t\t*** Round Complete. ***')
+
+    def play_turn(self):
+        pass
