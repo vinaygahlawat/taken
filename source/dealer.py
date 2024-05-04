@@ -1,7 +1,7 @@
 from source.deck import Deck
 from source.card import Card
 from source.player import Player
-from source.board_row import BoardRow
+from source.utility import print_to_file
 
 '''
 The Dealer object will be responsible for managing match play.
@@ -16,6 +16,7 @@ The Dealer:
 class Dealer:
 
     def __init__(self, number_of_players: int, rounds_per_game: int, deck_size: int, board_size: int, card_point_map: dict) -> None:
+
         # Set up Players
         self.players = {}
         for i in range(0, number_of_players):
@@ -43,19 +44,25 @@ class Dealer:
             if j < number_of_players:
                 j += 1
 
-        # Set up board
-        self.board: BoardRow = []
-        for row in range(board_size):
-            self.board.append(BoardRow(self.game_deck.card_deck[deck_size+row],5))
+    def start_match(self) -> None:
+        print_to_file(f'Match begins.')
 
-    def play_card(Player, Card):
-        pass
+        print_to_file(f'Match ended.')
 
-    def start_game() -> None:
-        pass
+    def start_game(self) -> None:
+        print_to_file(f'\tGame begins.')
 
-    def end_game() -> None:
-        pass
+        print_to_file(f'\tGame ends.')
 
-    def play_round() -> None:
-        pass
+    def end_game(self) -> bool:
+        print_to_file(f'\t Check for end game state...')
+
+    def end_match(self) -> None:
+        print_to_file(f'Beginn end match wrapup.')
+
+        print_to_file(f'Complete end match wrapup.')
+
+    def play_round(self) -> None:
+        print_to_file(f'\t\t*** Round Started ***')
+
+        print_to_file(f'\t\t*** Round Complete. ***')
