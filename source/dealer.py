@@ -1,3 +1,4 @@
+from source.board import Board
 from source.deck import Deck
 from source.card import Card
 from source.player import Player
@@ -37,12 +38,25 @@ class Dealer:
             card = self.game_deck.card_deck[i]
             player_hand[player].append(card)
 
+        # Save off cards to initialize board
+        board_cards: list[Card] = []
+        for i in range(board_size):
+            card = self.game_deck.card_deck[number_of_cards_to_deal + i]
+            board_cards.append(card)
+
         # Give dealt cards to players
         j = 0
         for id in self.players.keys():
             self.players[id].hand = player_hand[j]
             if j < number_of_players:
                 j += 1
+
+        # Initialize Board for match play
+        self.board = Board(board_size, 5) # TODO parameterize max board row length, hard-coded to 5 for now
+        self.board.initialize_rows(board_cards)
+
+        # Prepare game play
+        self.rounds = rounds_per_game
 
     def start_match(self) -> None:
         print_to_file(f'Match begins.')
