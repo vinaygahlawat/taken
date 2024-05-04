@@ -6,6 +6,8 @@ if __name__ == "__main__":
     output_file = "game_output.txt"
     if os.path.exists(output_file):
         os.remove(output_file)
-    print_to_file(f'Initializing game play...')
+    print_to_file(f'Initializing match play by initializing Dealer...')
     dealer = Dealer(2, 10, 104, 4, {7:11,9:3})
-    print_to_file(f'Match completed.')
+    print_to_file(f'Starting match...')
+    dealer.start_match()
+    print_to_file(f'Ending this match...')
