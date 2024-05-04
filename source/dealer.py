@@ -61,10 +61,27 @@ class Dealer:
     def start_match(self) -> None:
         print_to_file(f'Match begins.')
 
+#        while not self.end_game:
+        # Start a game
+        self.start_game()
+
+        # End match because end state has been reached
+        self.end_match()
+
         print_to_file(f'Match ended.')
 
     def start_game(self) -> None:
         print_to_file(f'\tGame begins.')
+
+        # Loop for the number of rounds there are (as determined by the number of cards dealt)
+        for i in range(self.rounds):
+            # Play a round
+            self.play_round()
+
+        print_to_file(f'\tEnd of rounds for this game. Current board:')
+
+        # Show game board at the end of every round
+        self.board.show_board()
 
         print_to_file(f'\tGame ends.')
 
@@ -72,9 +89,9 @@ class Dealer:
         print_to_file(f'\t Check for end game state...')
 
     def end_match(self) -> None:
-        print_to_file(f'Beginn end match wrapup.')
+        print_to_file(f'Begin end match wrap-up.')
 
-        print_to_file(f'Complete end match wrapup.')
+        print_to_file(f'Complete end match wrap-up.')
 
     def play_round(self) -> None:
         print_to_file(f'\t\t*** Round Started ***')
