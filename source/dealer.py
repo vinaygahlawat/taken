@@ -110,21 +110,24 @@ class Dealer:
 
         # Start turns with player with the lowest card
         # Add them to the board
-        while len(cards_played) > 0:
-            result = self.board.add_card(cards_played[0])
-            if result == None:
-                # Card cannot be placed in any row, so Player must choose row to replace
-                continue # TODO: add functionality for asking player for row choice
-            else:
-                del(cards_played[0])
-                row_taken = ''
-                for card in result:
-                    row_taken += f'{card.number}|{card.points}\t'
-                if row_taken != '':
-                    print_to_file("\t\t\tRow TakeN: " + row_taken)
-                # TODO: add functionality to sum up card points and add to scoreboard
+        # while len(cards_played) > 0:
+        for card in cards_played:
+            self.play_turn(card)
 
+        del(cards_played)
         print_to_file(f'\t\t*** Round Complete. ***')
 
-    def play_turn(self):
-        pass
+    def play_turn(self, card) -> None:
+        result = self.board.add_card(card)
+        if result == None:
+            # Card cannot be placed in any row, so Player must choose row to replace
+            # TODO: add functionality for asking player for row choice
+            print_to_file(f'Player must choose row to replace')
+        else:
+            # del(cards_played[0])
+            row_taken = ''
+            for card in result:
+                row_taken += f'{card.number}|{card.points}\t'
+            if row_taken != '':
+                print_to_file("\t\t\tRow TakeN: " + row_taken)
+            # TODO: add functionality to sum up card points and add to scoreboard
