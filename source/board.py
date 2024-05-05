@@ -27,9 +27,9 @@ class Board:
             print_to_file(f'Card {card.number} does not fit in any row. Player must choose row to take.')
             return None
 
-        print_to_file(f'Placing {card.number} in row {row_to_place}.')
+        print_to_file(f'\t\t\t\tPlacing {card.number} in row {row_to_place}.')
         if self.board_rows[row_to_place].is_full():
-            print_to_file(f'Row is full, player will take cards and row will reset.')
+            print_to_file(f'\t\t\t\tRow is full, player will take cards and row will reset.')
             return self.board_rows[row_to_place].reset(card)
         else:
             self.board_rows[row_to_place].add(card)
