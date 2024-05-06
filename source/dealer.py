@@ -24,6 +24,11 @@ class Dealer:
             id = str(i)
             self.players[id] = Player(self, id)
 
+        # Create a scoreboard
+        self.scoreboard = {}
+        for player in self.players:
+            self.scoreboard[player] = 0
+
         # Deal Cards
         self.game_deck: Deck = Deck(deck_size + board_size, card_point_map)
         player_hand = []
@@ -113,12 +118,13 @@ class Dealer:
         # Start turns with player with the lowest card
         # Add them to the board
         for card in cards_played:
-            self.play_turn(card)
+            self.play_turn(card, map_card_to_player[card.number])
 
         del(cards_played)
+        self.show_scoreboard()
         print_to_file(f'\t\t*** Round Complete. ***')
 
-    def play_turn(self, card) -> None:
+    def play_turn(self, card, player_id) -> None:
         result = self.board.add_card(card)
         if result == None:
             # Card cannot be placed in any row, so Player must choose row to replace
@@ -128,9 +134,15 @@ class Dealer:
             # card was successfully added to board, nothing else to do.
             print_to_file(f'\t\t\t\tCard {card.number}|{card.points} was successfully added to the board.')
         else:
+            point_tally = 0
             row_taken = ''
             for card in result:
                 row_taken += f'{card.number}|{card.points}\t'
+                point_tally += card.points
             if row_taken != '':
                 print_to_file("\t\t\t\tRow TakeN: " + row_taken)
-            # TODO: add functionality to sum up card points and add to scoreboard
+                # Add point tally from row taken to the player score
+                self.scoreboard[player_id] += point_tally
+
+    def show_scoreboard(self):
+        print_to_file(f'SCOREBOARD: {self.scoreboard}')
