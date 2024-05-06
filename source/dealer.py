@@ -98,11 +98,13 @@ class Dealer:
 
         # Get a card from each player
         cards_played: list[Card] = []
+        map_card_to_player = {}
         for id in self.players.keys():
             player = self.players[id]
-            player_card = player.play_card()
-            print_to_file(f'\t\t\t\tPlayer {player.id} played Card: {player_card.number}')
-            cards_played.append(player_card)
+            card = player.play_card()
+            print_to_file(f'\t\t\t\tPlayer {player.id} played Card: {card.number}')
+            cards_played.append(card)
+            map_card_to_player[card.number] = player.id
 
         # Sort played cards so turns can commence, beginning with
         # the player with the lowest-numbered played card.
@@ -110,7 +112,6 @@ class Dealer:
 
         # Start turns with player with the lowest card
         # Add them to the board
-        # while len(cards_played) > 0:
         for card in cards_played:
             self.play_turn(card)
 
@@ -122,12 +123,14 @@ class Dealer:
         if result == None:
             # Card cannot be placed in any row, so Player must choose row to replace
             # TODO: add functionality for asking player for row choice
-            print_to_file(f'Player must choose row to replace')
+            print_to_file(f'\t\t\t\tPlayer must choose row to replace')
+        elif result == []:
+            # card was successfully added to board, nothing else to do.
+            print_to_file(f'\t\t\t\tCard {card.number}|{card.points} was successfully added to the board.')
         else:
-            # del(cards_played[0])
             row_taken = ''
             for card in result:
                 row_taken += f'{card.number}|{card.points}\t'
             if row_taken != '':
-                print_to_file("\t\t\tRow TakeN: " + row_taken)
+                print_to_file("\t\t\t\tRow TakeN: " + row_taken)
             # TODO: add functionality to sum up card points and add to scoreboard
