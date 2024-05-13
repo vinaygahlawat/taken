@@ -18,6 +18,12 @@ class Dealer:
 
     def __init__(self, number_of_players: int, rounds_per_game: int, deck_size: int, board_size: int, card_point_map: dict) -> None:
 
+        self.number_of_players = number_of_players
+        self.deck_size = deck_size
+        self.board_size = board_size
+        self.rounds_per_game = rounds_per_game
+        self.card_point_map = card_point_map
+
         # Set up Players
         self.players = {}
         for i in range(0, number_of_players):
@@ -29,23 +35,42 @@ class Dealer:
         for player in self.players:
             self.scoreboard[player] = 0
 
+    def start_match(self) -> None:
+        print_to_file(f'Match begins.')
+
+        continue_match: bool = True
+        while continue_match:
+        # Start a game
+            self.start_game()
+
+            # End match because end state has been reached
+            if self.end_game():
+                print_to_file(f'Detected a match winner...')
+                continue_match = False
+                self.end_match()
+
+        print_to_file(f'Match ended.')
+
+    def start_game(self) -> None:
+        print_to_file(f'\tGame begins.')
+
         # Deal Cards
-        self.game_deck: Deck = Deck(deck_size + board_size, card_point_map)
+        self.game_deck: Deck = Deck(self.deck_size + self.board_size, self.card_point_map)
         player_hand = []
-        for i in range(number_of_players):
+        for i in range(self.number_of_players):
             hand = []
             player_hand.append(hand)
 
-        number_of_cards_to_deal = rounds_per_game * number_of_players
+        number_of_cards_to_deal = self.rounds_per_game * self.number_of_players
 
         for i in range(number_of_cards_to_deal):
-            player = i % number_of_players
+            player = i % self.number_of_players
             card = self.game_deck.card_deck[i]
             player_hand[player].append(card)
 
         # Save off cards to initialize board
         board_cards: list[Card] = []
-        for i in range(board_size):
+        for i in range(self.board_size):
             card = self.game_deck.card_deck[number_of_cards_to_deal + i]
             board_cards.append(card)
 
@@ -53,33 +78,16 @@ class Dealer:
         j = 0
         for id in self.players.keys():
             self.players[id].hand = player_hand[j]
-            if j < number_of_players:
+            if j < self.number_of_players:
                 j += 1
 
         # Initialize Board for match play
-        self.board = Board(board_size, 5) # TODO parameterize max board row length, hard-coded to 5 for now
-        self.match_threshold: int = 15 # TODO parameterize the point threshold for match end
+        self.board = Board(self.board_size, 5) # TODO parameterize max board row length, hard-coded to 5 for now
+        self.match_threshold: int = 25 # TODO parameterize the point threshold for match end
         self.board.initialize_rows(board_cards)
 
         # Prepare game play
-        self.rounds = rounds_per_game
-
-    def start_match(self) -> None:
-        print_to_file(f'Match begins.')
-
-#        while not self.end_game:
-        # Start a game
-        self.start_game()
-
-        # End match because end state has been reached
-        if self.end_game():
-            print_to_file(f'Detected a match winner...')
-            self.end_match()
-
-        print_to_file(f'Match ended.')
-
-    def start_game(self) -> None:
-        print_to_file(f'\tGame begins.')
+        self.rounds = self.rounds_per_game
 
         # Loop for the number of rounds there are (as determined by the number of cards dealt)
         for i in range(self.rounds):
@@ -98,9 +106,9 @@ class Dealer:
         is_match_finished: bool = False
 
         for player in self.scoreboard.keys():
-            print_to_file(f'Player {player} has score: {self.scoreboard[player]}')
+            print_to_file(f'\t\tPlayer {player} has score: {self.scoreboard[player]}')
             if self.scoreboard[player] > self.match_threshold:
-                print_to_file(f'Player {player} has crossed the threshold of {self.match_threshold}.')
+                print_to_file(f'\t\t\tPlayer {player} has crossed the threshold of {self.match_threshold}.')
                 is_match_finished = True
 
         return is_match_finished
