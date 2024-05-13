@@ -58,6 +58,7 @@ class Dealer:
 
         # Initialize Board for match play
         self.board = Board(board_size, 5) # TODO parameterize max board row length, hard-coded to 5 for now
+        self.match_threshold: int = 15 # TODO parameterize the point threshold for match end
         self.board.initialize_rows(board_cards)
 
         # Prepare game play
@@ -71,7 +72,9 @@ class Dealer:
         self.start_game()
 
         # End match because end state has been reached
-        self.end_match()
+        if self.end_game():
+            print_to_file(f'Detected a match winner...')
+            self.end_match()
 
         print_to_file(f'Match ended.')
 
@@ -92,10 +95,20 @@ class Dealer:
 
     def end_game(self) -> bool:
         print_to_file(f'\t Check for end game state...')
+        is_match_finished: bool = False
+
+        for player in self.scoreboard.keys():
+            print_to_file(f'Player {player} has score: {self.scoreboard[player]}')
+            if self.scoreboard[player] > self.match_threshold:
+                print_to_file(f'Player {player} has crossed the threshold of {self.match_threshold}.')
+                is_match_finished = True
+
+        return is_match_finished
 
     def end_match(self) -> None:
         print_to_file(f'Begin end match wrap-up.')
-
+        match_winner = self.match_winner()
+        print_to_file(f'Match is over, and the winner is {match_winner}! Congrats!')
         print_to_file(f'Complete end match wrap-up.')
 
     def play_round(self) -> None:
@@ -145,4 +158,15 @@ class Dealer:
                 self.scoreboard[player_id] += point_tally
 
     def show_scoreboard(self):
-        print_to_file(f'SCOREBOARD: {self.scoreboard}')
+        print_to_file(f'\n**********\nSCOREBOARD: {self.scoreboard}\n**********\n')
+
+    def match_winner(self) -> Player:
+        winner: Player = None
+
+        for player in self.scoreboard.keys():
+            if winner is None:
+                winner = player
+            elif self.scoreboard[player] < self.scoreboard[winner]:
+                winner = player
+
+        return winner
