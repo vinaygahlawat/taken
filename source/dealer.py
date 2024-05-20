@@ -56,6 +56,7 @@ class Dealer:
 
         # Deal Cards
         self.game_deck: Deck = Deck(self.deck_size + self.board_size, self.card_point_map)
+        self.game_deck.shuffle()
         player_hand = []
         for i in range(self.number_of_players):
             hand = []
@@ -97,7 +98,6 @@ class Dealer:
             # Show game board at the end of every round
             print_to_file(f'\t\tEnd of round --> Current board:')
             self.board.show_board()
-
 
         print_to_file(f'\tGame ends.')
 
@@ -158,7 +158,7 @@ class Dealer:
             point_tally = 0
             row_taken = ''
             for card in result:
-                row_taken += f'{card.number}|{card.points}\t'
+                row_taken += f'{card} '
                 point_tally += card.points
             if row_taken != '':
                 print_to_file("\t\t\t\tRow TakeN: " + row_taken)

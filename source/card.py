@@ -6,3 +6,6 @@ class Card:
 
     def sortFunc(e):
         return e.number
+
+    def __str__(self) -> str:
+        return str(f'{self.number}|{self.points}')
