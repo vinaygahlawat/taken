@@ -95,7 +95,7 @@ class Dealer:
             self.play_round()
 
             # Show game board at the end of every round
-            print_to_file(f'\tEnd of round --> Current board:')
+            print_to_file(f'\t\tEnd of round --> Current board:')
             self.board.show_board()
 
 
@@ -120,7 +120,7 @@ class Dealer:
         print_to_file(f'Complete end match wrap-up.')
 
     def play_round(self) -> None:
-        print_to_file(f'\t\t*** Round Started ***')
+        print_to_file(f'\t\t*** Round Started ***\n')
 
         # Get a card from each player
         cards_played: list[Card] = []
@@ -128,7 +128,7 @@ class Dealer:
         for id in self.players.keys():
             player = self.players[id]
             card = player.play_card()
-            print_to_file(f'\t\t\t\tPlayer {player.id} played Card: {card.number}')
+            print_to_file(f'\t\t\tPlayer {player.id} played Card: {card.number}')
             cards_played.append(card)
             map_card_to_player[card.number] = player.id
 
@@ -143,7 +143,7 @@ class Dealer:
 
         del(cards_played)
         self.show_scoreboard()
-        print_to_file(f'\t\t*** Round Complete. ***')
+        print_to_file(f'\t\t*** Round Complete. ***\n')
 
     def play_turn(self, card, player_id) -> None:
         result = self.board.add_card(card)
@@ -166,7 +166,9 @@ class Dealer:
                 self.scoreboard[player_id] += point_tally
 
     def show_scoreboard(self):
-        print_to_file(f'\n**********\nSCOREBOARD: {self.scoreboard}\n**********\n')
+        print_to_file(f'\n\t\t******************************')
+        print_to_file(f'\t\tSCOREBOARD: {self.scoreboard}')
+        print_to_file(f'\t\t******************************\n')
 
     def match_winner(self) -> Player:
         winner: Player = None

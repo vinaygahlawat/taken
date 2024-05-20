@@ -37,10 +37,10 @@ class Board:
 
 
     def show_board(self) -> None:
-        print_to_file(f'\n********************\n')
+        print_to_file(f'\n\t\t************************************************************')
         for row in self.board_rows:
             board_row = 'Board Row:\t'
             for card in row.board_row:
                 board_row += f'\t\t{card.number}|{card.points}'
-            print_to_file(f'{board_row}')
-        print_to_file(f'\n********************\n')
+            print_to_file(f'\t\t{board_row}')
+        print_to_file(f'\t\t************************************************************\n')
