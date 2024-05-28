@@ -19,13 +19,20 @@ class Board:
         row_to_place: int = -1
         min_diff: int = 1000
         for row in self.board_rows:
-            if card.number - row.peek() < min_diff:
+            if card.number > row.peek() and card.number - row.peek() < min_diff:
                 min_diff = card.number - row.peek()
                 row_to_place = row.id
 
         if row_to_place == -1:
-            print_to_file(f'Card {card.number} does not fit in any row. Player must choose row to take.')
-            return None
+            print_to_file(f'\t\t\t\tCard {card} does not fit in any row. Row with the minimum point value is TakeN.')
+            min_row_sum: int = 1000
+            min_row: int = 0
+            for board_row in self.board_rows:
+                sum = board_row.sum_row()
+                if sum < min_row_sum:
+                    min_row_sum = sum
+                    min_row = board_row.id
+            return self.board_rows[min_row].reset(card)
 
         print_to_file(f'\t\t\t\tPlacing {card.number} in row {row_to_place}.')
         if self.board_rows[row_to_place].is_full():

@@ -86,6 +86,8 @@ class Dealer:
         self.board = Board(self.board_size, 5) # TODO parameterize max board row length, hard-coded to 5 for now
         self.match_threshold: int = 25 # TODO parameterize the point threshold for match end
         self.board.initialize_rows(board_cards)
+        print_to_file(f'\t\tBoard at beginning of game:')
+        self.board.show_board()
 
         # Prepare game play
         self.rounds = self.rounds_per_game
@@ -128,7 +130,7 @@ class Dealer:
         for id in self.players.keys():
             player = self.players[id]
             card = player.play_card()
-            print_to_file(f'\t\t\tPlayer {player.id} played Card: {card.number}')
+            print_to_file(f'\t\t\tPlayer {player.id} played Card: {card}')
             cards_played.append(card)
             map_card_to_player[card.number] = player.id
 
@@ -147,13 +149,9 @@ class Dealer:
 
     def play_turn(self, card, player_id) -> None:
         result = self.board.add_card(card)
-        if result == None:
-            # Card cannot be placed in any row, so Player must choose row to replace
-            # TODO: add functionality for asking player for row choice
-            print_to_file(f'\t\t\t\tPlayer must choose row to replace')
-        elif result == []:
+        if result == []:
             # card was successfully added to board, nothing else to do.
-            print_to_file(f'\t\t\t\tCard {card.number}|{card.points} was successfully added to the board.')
+            print_to_file(f'\t\t\t\tCard {card} was successfully added to the board.')
         else:
             point_tally = 0
             row_taken = ''

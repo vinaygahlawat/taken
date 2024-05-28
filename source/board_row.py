@@ -44,3 +44,9 @@ class BoardRow:
         self.board_row.appendleft(new_start_card)
 
         return row_contents
+
+    def sum_row(self) -> int:
+        sum: int = 0
+        for card in self.board_row:
+            sum += card.points
+        return sum
