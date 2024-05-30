@@ -1,5 +1,7 @@
 # TakeN
 
+*Note: this is just a fun hobby project I created as a way to play around with Python, and eventually I'd like to grow it into a web-based game I can play with my friends and family. It is based on the card game [Take 5](https://gamerules.com/rules/take-5/).*
+
 ## How TakeN is played:
 TakeN is a turn-based card game. The objective of the game is to accumulate the least amounts of *points*, which a player gets when they take cards.
 
