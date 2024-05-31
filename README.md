@@ -1,5 +1,5 @@
 # TakeN
-![Unit Tests](https://github.com/vinaygahlawat/taken/actions/workflows/taken-python-unittest.yml/badge.svg)
+![Unit Tests](https://github.com/vinaygahlawat/taken/actions/workflows/taken-python-unittest.yml/badge.svg?event=push)
 
 *Note: this is just a fun hobby project I created as a way to play around with Python, and eventually I'd like to grow it into a web-based game I can play with my friends and family. It is based on the card game [Take 5](https://gamerules.com/rules/take-5/).*
 
