@@ -3,6 +3,7 @@ from source.deck import Deck
 from source.card import Card
 from source.player import Player
 from source.utility import print_to_file
+from json import JSONDecoder
 
 '''
 The Dealer object will be responsible for managing match play.
@@ -16,17 +17,20 @@ The Dealer:
 '''
 class Dealer:
 
-    def __init__(self, number_of_players: int, rounds_per_game: int, deck_size: int, board_size: int, card_point_map: dict) -> None:
-
-        self.number_of_players = number_of_players
-        self.deck_size = deck_size
-        self.board_size = board_size
-        self.rounds_per_game = rounds_per_game
-        self.card_point_map = card_point_map
+    def __init__(self, init_values) -> None:
+        decoder = JSONDecoder()
+        match_params = decoder.decode(init_values)
+        print_to_file(f'\nMatch Parameters:\n{match_params}\n')
+        params = match_params['match_params']
+        self.number_of_players = params['number_of_players']
+        self.deck_size = params['deck_size']
+        self.board_size = params['board_size']
+        self.rounds_per_game = params['rounds_per_game']
+        self.card_point_map = params['card_point_map']
 
         # Set up Players
         self.players = {}
-        for i in range(0, number_of_players):
+        for i in range(0, self.number_of_players):
             id = str(i)
             self.players[id] = Player(self, id)
 
